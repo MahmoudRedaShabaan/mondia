@@ -1,5 +1,3 @@
-# mondia
-
 before run application you mast have:
 1-postgresql Database
 2-STS or Eclipse

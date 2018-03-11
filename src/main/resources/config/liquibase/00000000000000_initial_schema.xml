@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="00000000000001" author="M.Reda">
+		<!-- create intial product table -->
+		<createTable tableName="product">
+			<column name="id" type="bigserial" autoIncrement="${autoIncrement}" startWith="1">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)" />
+			<column name="description" type="varchar(250)" />
+			<column name="min_price" type="double" />
+			<column name="max_price" type="double" />
+		</createTable>
+
+		<!-- create intial operator table -->
+		<createTable tableName="operator">
+			<column name="id" type="bigserial" autoIncrement="${autoIncrement}" startWith="1">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)" />
+			<column name="country" type="varchar(50)" />
+		</createTable>
+
+		<!-- create intial service table -->
+		<createTable tableName="service">
+			<column name="id" type="bigserial" autoIncrement="${autoIncrement}" startWith="1">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)" />
+			<column name="type_id" type="bigint" />
+			<column name="operator_id" type="bigint" />
+			<column name="operatorservice_id" type="bigint" />
+			<column name="operatorpackage_id" type="bigint" />
+			<column name="product_id" type="bigint" />
+		</createTable>
+
+		<!-- create intial type table -->
+		<createTable tableName="type">
+			<column name="id" type="bigserial">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)" />
+		</createTable>
+		
+			<!-- create intial user table -->
+		<createTable tableName="iuser">
+			<column name="id" type="bigserial" autoIncrement="${autoIncrement}" startWith="1">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="username" type="varchar(50)" />
+			<column name="password" type="varchar(150)" />
+		</createTable>
+
+		<!-- create intial role table -->
+		<createTable tableName="role">
+			<column name="id" type="bigserial" autoIncrement="${autoIncrement}" startWith="1">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)" />
+		</createTable>
+
+		<insert tableName="type">
+			<column name="id" value="1" />
+			<column name="name" value="Subscription" />
+		</insert>
+		<insert tableName="type">
+			<column name="id" value="2" />
+			<column name="name" value="Ala-carte" />
+		</insert>
+		
+		
+
+
+		<addForeignKeyConstraint baseColumnNames="operator_id" baseTableName="service" constraintName="fk_operator_id" referencedColumnNames="id" referencedTableName="operator" />
+		<addForeignKeyConstraint baseColumnNames="type_id" baseTableName="service" constraintName="fk_type_id" referencedColumnNames="id" referencedTableName="type" />
+		<addForeignKeyConstraint baseColumnNames="product_id" baseTableName="service" constraintName="fk_product_id" referencedColumnNames="id" referencedTableName="product" />
+	</changeSet>
+
+</databaseChangeLog>
